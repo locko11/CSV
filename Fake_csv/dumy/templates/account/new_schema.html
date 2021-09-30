@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <style>
+          .m{
+                padding-left: 5%;
+                padding-right: 5%;
+                }
+          .form-w{
+                width: 45%;
+          }
+          .f-f{
+            font-family: Helvetica;
+            }
+
+            .top-left {
+            top: 0;
+            left: 0;
+        }
+          
+        .top-center {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+          
+        .top-right {
+            top: 0;
+            right: 0;
+        }
+          
+        .mid-left {
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+          
+        .mid-center {
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+          
+        .mid-right {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+          
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+          
+        .bottom-center {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+          
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light justify-content-between m rounded" style="background-color: #F7F7F9;">
+    <a class="navbar-brand" href="#">Navbar w/ text</a>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="#">Home </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Features</a>
+                  </li>
+              </ul>
+              </span>
+    </div>
+</nav>
+<div class="container">
+    <form action="new_schema" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                New schema
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="form-label-lg mb-1">Schema name</label>
+                    <input class="form-control form-control-lg mb-3" type="text"
+                           aria-label=".form-control-lg example" name="schema_name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Column separator</label>
+                    <select class="form-select form-select-lg mb-3"
+                            id="exampleFormControlSelect1" name="column_separator">
+                        <option selected value="comma">Comma (,)</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect2">String character</label>
+                    <select class="form-select form-select-lg mb-3"
+                            id="exampleFormControlSelect2" name="string_character">
+                        <option selected value="duble-quote">Double-quote (“)</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    {% if col_form.errors %}
+                        {{schema_form.errors}}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-flex flex-row-reverse">
+                    <button type="submit" class="btn btn-primary text-right" style="float: right;">Delate</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                Schema columns
+            </div>
+        </div>
+
+
+        <div class="row mt-3 mb-3" id="row0">
+            <div class="row mt-2 mb-2" id="row1">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Column name</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                               placeholder="Name">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Type</label>
+                        <select class="form-select mb-3"
+                            id="exampleFormControlInput1" name="type_">
+                        <option selected value="full_name">Full name</option>
+                        <option value="job">Job</option>
+                        <option value="email">Email</option>
+                        <option value="company_name">Company name</option>
+                            <option value="phone_number">Phone number</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-auto d-flex flex-row-reverse">
+                    <div class="row text-right">
+                        <div class="col">
+                            <label for="exampleFormControlInput1">Order</label>
+                            <input type="number" class="form-control" id="exampleFormControlInput1"
+                                   placeholder="1">
+                        </div>
+                        <div class="col-auto align-self-end">
+                            <button class="btn btn-primary text-right" style="margin-bottom: 0;">Delate
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col">
+                {% if col_form.errors %}
+                        {{col_form.errors}}
+                    {% endif %}
+            </div>
+        </div>
+    </form>
+
+    <div class="row border pt-3 pb-3 mt-3">
+        <div class="row" id='addROW'>
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Column name</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                           placeholder="Column name" name="name_">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Type</label>
+
+                    <select class="form-select mb-3"
+                            id="exampleFormControlInput1" name="type_">
+                        <option selected value="full_name">Full name</option>
+                        <option value="job">Job</option>
+                        <option value="email">Email</option>
+                        <option value="company_name">Company name</option>
+                        <option value="phone_number">Phone number</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-auto d-flex flex-row-reverse">
+                <div class="row text-right">
+                    <div class="col">
+                        <label for="exampleFormControlInput1">Order</label>
+                        <input type="number" class="form-control" id="exampleFormControlInput1"
+                               placeholder="1" name=order_>
+                    </div>
+                    <div class="col-auto align-self-end">
+                        <button class="btn btn-primary text-right" style="margin-bottom: 0;" id="addBtn">Delate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
+</body>
+<script>
+    window.onload = ()=>{
+
+        function addNames(fatherNode) {
+            inputs = fatherNode.getElementsByTagName("input")
+            arrInputs = Array.prototype.slice.call(inputs);
+            select = fatherNode.getElementsByTagName("select")
+            arrSelect = Array.prototype.slice.call(select);
+            arrInputs.map(node=>{
+                node.name += fatherNode.id
+            })
+            arrSelect.map(node=>{
+                node.name += fatherNode.id
+            })
+        }
+
+        let n = 1
+        addBtn = document.getElementById("addBtn")
+        addRow = document.getElementById("addROW")
+        addBtn.addEventListener('click', (event)=>{
+            clonedRow = addRow.cloneNode(true)
+            const id = "row" + n
+            clonedRow.id = id
+            addNames(clonedRow)
+            btn = clonedRow.getElementsByTagName("button")[0]
+            btn.onclick = (event)=>{
+                console.log(event)
+                document.getElementById(id).remove();
+            }
+            document.getElementById("row0").appendChild(clonedRow)
+            ++n
+        })
+    }
+
+
+
+</script>
+</html>

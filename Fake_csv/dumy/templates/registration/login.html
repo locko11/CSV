@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+      <style>
+          .m-l{
+                margin-top: 10%;
+                margin-left: auto;
+                margin-right: auto;
+                }
+          .form-w{
+                width: 45%;
+          }
+          .f-f{
+            font-family: Helvetica;
+            }
+      </style>
+
+  </head>
+  <body>
+      <div class="d-flex justify-content-center">
+
+          <div class="border mt-5 rounded d-flex justify-content-center" style="width: 650px; height: 450px;">
+              <form class="m-auto form-w" action="." method="post">
+                  <div class="text-center font-weight-ligh f-f" style="width: 100%; height: 70px; font-size: 2em; color: $blue-400;" >Login</div>
+                  <div class="mb-3">
+                      <input type="username" class="form-control" aria-describedby="emailHelp" placeholder="Username" name="username">
+                  </div>
+                  <div class="mb-3">
+                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                  </div>
+                  {% csrf_token %}
+                  <div class="mb-3 ">
+                    <button type="submit" class="btn btn-primary f-f blue" style="float: right; background: #0275D8;">Login</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+  </body>
+</html>
