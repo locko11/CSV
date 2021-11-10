@@ -1,319 +1,491 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-    <style>
-          .m{
-                padding-left: 5%;
-                padding-right: 5%;
-                }
-          .form-w{
-                width: 45%;
-          }
-          .f-f{
-            font-family: Helvetica;
-            }
-
-            .top-left {
-            top: 0;
-            left: 0;
-        }
-          
-        .top-center {
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-          
-        .top-right {
-            top: 0;
-            right: 0;
-        }
-          
-        .mid-left {
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-        }
-          
-        .mid-center {
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-        }
-          
-        .mid-right {
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-        }
-          
-        .bottom-left {
-            bottom: 0;
-            left: 0;
-        }
-          
-        .bottom-center {
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-          
-        .bottom-right {
-            bottom: 0;
-            right: 0;
-        }
-
-
-
-    </style>
-
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light justify-content-between m rounded" style="background-color: #F7F7F9;">
-    <a class="navbar-brand" href="#">Navbar w/ text</a>
-    <div class="collapse navbar-collapse justify-content-between" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-            </li>
-        </ul>
-        <span class="navbar-text">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                      <a class="nav-link" href="#">Home </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#">Features</a>
-                  </li>
-              </ul>
-              </span>
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block title %}New Schema{% endblock %}
+{% block content %}
+<form action="{% url 'edit_schema' sch_form.id.value request.user.username%}" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col">
+            New schema  asdfsdfsd
+        </div>
     </div>
-</nav>
-<div class="container">
-    <form action="{% url 'edit_schema' schema.id request.user.username%}" method="post">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col">
-                New schema
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="sch_form.schame_name.id_for_label" class="form-label-lg mb-1">{{sch_form.schame_name.label}}</label>
+                {% render_field sch_form.schame_name|attr:"placeholder:BarcelonaBookingData" class="form-control form-control-lg mb-3"%}
+                {{sch_form.schame_name.errors}}
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="exampleFormControlInput1" class="form-label-lg mb-1">Schema name</label>
-                    <input class="form-control form-control-lg mb-3" type="text"
-                           aria-label=".form-control-lg example" name="schema_name" value={{schema.schame_name}}>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Column separator</label>
-                    <select class="form-select form-select-lg mb-3"
-                            id="exampleFormControlSelect1" name="column_separator">
-                        <option value="comma"
-                                {% if schema.column_separator == "comma" %}selected="selected"{% endif %}>
-                            Comma (,)</option>
-                        <option value="2"
-                            {% if schema.column_separator == "2" %}selected="selected"{% endif %}>
-                            Two</option>
-                        <option value="3"
-                                {% if schema.column_separator == "3" %}selected="selected"{% endif %}>
-                        Three</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect2">String character</label>
-                    <select class="form-select form-select-lg mb-3"
-                            id="exampleFormControlSelect2" name="string_character">
-                        <option value="duble-quote"
-                                {% if schema.column_separator == "duble-quote" %}selected="selected"{% endif %}>
-                            Double-quote (“)</option>
-                        <option value="2"
-                            {% if schema.column_separator == "2" %}selected="selected"{% endif %}>
-                            Two</option>
-                        <option value="3"
-                                {% if schema.column_separator == "3" %}selected="selected"{% endif %}>
-                        Three</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    {% if col_form.errors %}
-                        {{schema_form.errors}}
-                    {% endif %}
-                </div>
+            <div class="form-group">
+                <label for="sch_form.column_separator.id_for_label" class="form-label-lg mb-1">{{sch_form.column_separator.label}}</label>
+                {% render_field sch_form.column_separator class="form-select form-select-lg mb-3" %}
+                {{sch_form.column_separator.errors}}
             </div>
-            <div class="col">
-                <div class="d-flex flex-row-reverse">
-                    <button type="submit" class="btn btn-primary text-right" style="float: right;">Delate</button>
-                </div>
+            <div class="form-group">
+                <label for="sch_form.string_character.id_for_label" class="form-label-lg mb-1">{{sch_form.string_character.label}}</label>
+                {% render_field sch_form.string_character class="form-select form-select-lg mb-3" %}
+                {{sch_form.string_character.errors}}
             </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col">
-                Schema columns
+                {% render_field sch_form.id|attr:"hidden" %}
+                <input name="user" value="{{request.user.id}}">
+<!--                {% render_field sch_form.user|attr:"hidden" selected=request.user.id %}-->
+            <div class="form-group">
+                {{ sch_form.non_field_errors }}
 
             </div>
         </div>
 
-
-        <div class="row mt-3 mb-3" id="row0">
-            {% for col in clumns %}
-                <div class="row mt-2 mb-2 colRow">
-                    <div class="col">
-                        <input type="id" hidden class="form-control" value={{col.id}} name="id_row{{col.id}}">
-                        <div class="form-group">
-                            <label for="exampleFormControlInput1">Column name</label>
-                            <input type="text" class="form-control" name="name_row{{col.id}}" value={{col.name}}>
-                            {% if col_form.name.errors %} col_form.name.errors {% endif %}
-                        </div>
+        <div class="col">
+            <div class="d-flex flex-row-reverse">
+                <button type="submit" class="btn btn-primary text-right" style="float: right;">Create schema</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Schema columns
+        </div>
+    </div>
+    <div class="row" id="main-cont">
+        {% for col_form in col_formset %}
+        <div class="row pt-3 pb-3 mt-3">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="{{col_form.name.id_for_label}}" class="form-label mb-1">{{col_form.name.label_tag}}</label>
+                        {% render_field col_form.name class="form-control mb-3" %}
+                        {{col_form.name.errors}}
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="exampleFormControlInput1">Type</label>
-                            <select class="form-select mb-3"
-                                name="type_row{{col.id}}">
-                            <option value="full_name" {% if col.type == "full_name" %}selected="selected"{% endif %}>Full name</option>
-                            <option value="job" {% if col.type == "job" %}selected="selected"{% endif %}>Job</option>
-                            <option value="email" {% if col.type == "email" %}selected="selected"{% endif %}>Email</option>
-                            <option value="company_name" {% if col.type == "company_name" %}selected="selected"{% endif %}>Company name</option>
-                                <option value="phone_number" {% if col.type == "phone_number" %}selected="selected"{% endif %}>Phone number</option>
-                        </select>
-                            {% if col_form.type.errors %} col_form.name.errors {% endif %}
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="{{col_form.type.id_for_label}}" class="form-label mb-1">{{col_form.type.label_tag}}</label>
+                        {% render_field col_form.type class="form-select form-select mb-3" %}
+                        {{col_form.type.errors}}
                     </div>
-                    <div class="col-auto d-flex flex-row-reverse">
-                        <div class="row text-right">
-                            <div class="col">
-                                <label for="exampleFormControlInput1">Order</label>
-                                <input type="number" class="form-control" name="order_row{{col.id}}"
-                                       value={{col.order}}>
-                                {% if col_form.order.errors %} col_form.name.errors {% endif %}
+                </div>
+                <div class="col-auto d-flex flex-row-reverse">
+                    <div class="row text-right">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="{{col_form.order.id_for_label}}" class="form-label mb-1">{{col_form.order.label_tag}}</label>
+                                {% render_field col_form.order class="form-select form-select mb-3" %}
+                                {{col_form.order.errors}}
                             </div>
-                            <div class="col-auto align-self-end">
-                                <button class="btn btn-primary text-right" style="margin-bottom: 0;" id="delbtn">Delate
-                                </button>
-                            </div>
-
+                        </div>
+                        {% render_field col_form.DELETE %}
+                        {% render_field col_form.id|attr:"hidden" %}
+                        {% render_field col_form.schema|attr:"hidden" %}
+                        <div class="col-auto align-self-end">
+                            <button class="btn btn-primary text-right" style="margin-bottom: 0;" id=""
+                                    type="button">Delete
+                            </button>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-            <div class="col">
-                {% if col_form.errors %}
-                        {{col_form.errors}}
-                {% endif %}
-
+            </div>
+            <div class="row">
+                {{ col_form.non_field_errors }}
             </div>
         </div>
-    </form>
+        {% endfor %}
+    </div>
+
+    {{col_formset.management_form}}
+
+</form>
 
     <div class="row border pt-3 pb-3 mt-3">
-        <div class="row" id='addROW'>
+
+        <div class="row">
+            <div class="col mt-1 mb-3">
+                Add column
+            </div>
+        </div>
+        <div class="row" id="empty_form">
+            {% render_field col_formset.empty_form.id|attr:"hidden" %}
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Column name</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1"
-                           placeholder="Column name" name="name_">
+                    <label for="{{col_formset.empty_form.name.id_for_label}}" class="form-label mb-1">{{col_formset.empty_form.name.label_tag}}</label>
+                    {% render_field col_formset.empty_form.name class="form-control mb-3" %}
+                    {{col_formset.empty_form.name.errors}}
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Type</label>
-
-                    <select class="form-select mb-3"
-                            id="exampleFormControlInput1" name="type_">
-                        <option selected value="full_name">Full name</option>
-                        <option value="job">Job</option>
-                        <option value="email">Email</option>
-                        <option value="company_name">Company name</option>
-                        <option value="phone_number">Phone number</option>
-                    </select>
+                    <label for="{{col_formset.empty_form.type.id_for_label}}" class="form-label mb-1">{{col_formset.empty_form.type.label_tag}}</label>
+                    {% render_field col_formset.empty_form.type class="form-select form-select mb-3" %}
+                    {{col_formset.empty_form.type.errors}}
                 </div>
             </div>
             <div class="col-auto d-flex flex-row-reverse">
                 <div class="row text-right">
                     <div class="col">
-                        <label for="exampleFormControlInput1">Order</label>
-                        <input type="number" class="form-control"
-                               placeholder="1" name=order_>
+                         <div class="form-group">
+                            <label for="{{col_formset.empty_form.order.id_for_label}}" class="form-label mb-1">{{col_formset.empty_form.order.label_tag}}</label>
+                            {% render_field col_formset.empty_form.order class="form-select form-select mb-3" %}
+                            {{col_formset.empty_form.order.errors}}
+                         </div>
                     </div>
+                    {% render_field col_formset.empty_form.DELETE %}
                     <div class="col-auto align-self-end">
-                        <button class="btn btn-primary text-right" style="margin-bottom: 0;" id="addBtn">Delate
-                        </button>
+                            <button class="btn btn-primary text-right" style="margin-bottom: 0;" id="add-form" type="button">Add</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-        crossorigin="anonymous"></script>
-
-</body>
 <script>
-    window.onload = ()=>{
 
-        function addNames(fatherNode) {
-            inputs = fatherNode.getElementsByTagName("input")
-            arrInputs = Array.prototype.slice.call(inputs);
-            select = fatherNode.getElementsByTagName("select")
-            arrSelect = Array.prototype.slice.call(select);
-            arrInputs.map(node=>{
-                node.name += fatherNode.id
-            })
-            arrSelect.map(node=>{
-                node.name += fatherNode.id
-            })
-        }
+            const addButton = document.querySelector("#add-form")
+            let totalForms = document.querySelector("#id_column-TOTAL_FORMS")
 
-        let n = 100
-        addBtn = document.getElementById("addBtn")
-        addRow = document.getElementById("addROW")
-        addBtn.addEventListener('click', (event)=>{
-            clonedRow = addRow.cloneNode(true)
-            const id = "row" + n
-            clonedRow.id = id
-            addNames(clonedRow)
-            btn = clonedRow.getElementsByTagName("button")[0]
-            btn.onclick = (event)=>{
-                console.log(event)
-                document.getElementById(id).remove();
+            addButton.addEventListener('click', addForm)
+
+            function addForm(e){
+                e.preventDefault()
+
+                const curCount = document.querySelectorAll(".row-column").length
+                console.log(curCount)
+                const formsFather = document.getElementById("main-cont")
+                const newForm = document.getElementById('empty_form').cloneNode(true)
+                newForm.setAttribute('class', 'row-column row')
+                newForm.setAttribute('id', `column-${curCount}`)
+                const reg = RegExp('__prefix__', 'g')
+                newForm.innerHTML = newForm.innerHTML.replace(reg, curCount)
+
+                totalForms.setAttribute('value', curCount + 1)
+                btn = newForm.getElementsByTagName("button")[0]
+                btn.onclick = (e)=>{
+                    e.preventDefault()
+                    newForm.remove();
+                    totalForms.setAttribute('value', curCount)
+                }
+                btn.innerText = "Delete"
+                formsFather.append(newForm)
             }
-            document.getElementById("row0").appendChild(clonedRow)
-            ++n
-        })
-
-        const colRow = document.getElementsByClassName("colRow")
-        for (let index = 0; index < colRow.length; index++) {
-            const element = colRow[index];
-            console.log(element)
-            const btn = element.getElementsByTagName("button")[0]
-            console.log(btn)
-            btn.onclick = (event)=>{
-                element.remove();
-            }
-        }
-    }
-
-
-
 </script>
-</html>
+
+{% endblock %}
+
+
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    &lt;!&ndash; Required meta tags &ndash;&gt;-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
+
+<!--    <title>Hello, world!</title>-->
+<!--    <style>-->
+<!--          .m{-->
+<!--                padding-left: 5%;-->
+<!--                padding-right: 5%;-->
+<!--                }-->
+<!--          .form-w{-->
+<!--                width: 45%;-->
+<!--          }-->
+<!--          .f-f{-->
+<!--            font-family: Helvetica;-->
+<!--            }-->
+
+<!--            .top-left {-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--        }-->
+<!--          -->
+<!--        .top-center {-->
+<!--            top: 0;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%);-->
+<!--        }-->
+<!--          -->
+<!--        .top-right {-->
+<!--            top: 0;-->
+<!--            right: 0;-->
+<!--        }-->
+<!--          -->
+<!--        .mid-left {-->
+<!--            top: 50%;-->
+<!--            left: 0;-->
+<!--            transform: translateY(-50%);-->
+<!--        }-->
+<!--          -->
+<!--        .mid-center {-->
+<!--            top: 50%;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%) translateY(-50%);-->
+<!--        }-->
+<!--          -->
+<!--        .mid-right {-->
+<!--            top: 50%;-->
+<!--            right: 0;-->
+<!--            transform: translateY(-50%);-->
+<!--        }-->
+<!--          -->
+<!--        .bottom-left {-->
+<!--            bottom: 0;-->
+<!--            left: 0;-->
+<!--        }-->
+<!--          -->
+<!--        .bottom-center {-->
+<!--            bottom: 0;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%);-->
+<!--        }-->
+<!--          -->
+<!--        .bottom-right {-->
+<!--            bottom: 0;-->
+<!--            right: 0;-->
+<!--        }-->
+
+
+
+<!--    </style>-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<nav class="navbar navbar-expand-lg navbar-light justify-content-between m rounded" style="background-color: #F7F7F9;">-->
+<!--    <a class="navbar-brand" href="#">Navbar w/ text</a>-->
+<!--    <div class="collapse navbar-collapse justify-content-between" id="navbarText">-->
+<!--        <ul class="navbar-nav mr-auto">-->
+<!--            <li class="nav-item active">-->
+<!--                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="#">Features</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="#">Pricing</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--        <span class="navbar-text">-->
+<!--                <ul class="navbar-nav mr-auto">-->
+<!--                  <li class="nav-item active">-->
+<!--                      <a class="nav-link" href="#">Home </a>-->
+<!--                  </li>-->
+<!--                  <li class="nav-item">-->
+<!--                      <a class="nav-link" href="#">Features</a>-->
+<!--                  </li>-->
+<!--              </ul>-->
+<!--              </span>-->
+<!--    </div>-->
+<!--</nav>-->
+<!--<div class="container">-->
+<!--    <form action="{% url 'edit_schema' schema.id request.user.username%}" method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <div class="row">-->
+<!--            <div class="col">-->
+<!--                New schema-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="exampleFormControlInput1" class="form-label-lg mb-1">Schema name</label>-->
+<!--                    <input class="form-control form-control-lg mb-3" type="text"-->
+<!--                           aria-label=".form-control-lg example" name="schema_name" value={{schema.schame_name}}>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="exampleFormControlSelect1">Column separator</label>-->
+<!--                    <select class="form-select form-select-lg mb-3"-->
+<!--                            id="exampleFormControlSelect1" name="column_separator">-->
+<!--                        <option value="comma"-->
+<!--                                {% if schema.column_separator == "comma" %}selected="selected"{% endif %}>-->
+<!--                            Comma (,)</option>-->
+<!--                        <option value="2"-->
+<!--                            {% if schema.column_separator == "2" %}selected="selected"{% endif %}>-->
+<!--                            Two</option>-->
+<!--                        <option value="3"-->
+<!--                                {% if schema.column_separator == "3" %}selected="selected"{% endif %}>-->
+<!--                        Three</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="exampleFormControlSelect2">String character</label>-->
+<!--                    <select class="form-select form-select-lg mb-3"-->
+<!--                            id="exampleFormControlSelect2" name="string_character">-->
+<!--                        <option value="duble-quote"-->
+<!--                                {% if schema.column_separator == "duble-quote" %}selected="selected"{% endif %}>-->
+<!--                            Double-quote (“)</option>-->
+<!--                        <option value="2"-->
+<!--                            {% if schema.column_separator == "2" %}selected="selected"{% endif %}>-->
+<!--                            Two</option>-->
+<!--                        <option value="3"-->
+<!--                                {% if schema.column_separator == "3" %}selected="selected"{% endif %}>-->
+<!--                        Three</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    {% if col_form.errors %}-->
+<!--                        {{schema_form.errors}}-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="d-flex flex-row-reverse">-->
+<!--                    <button type="submit" class="btn btn-primary text-right" style="float: right;">Delate</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--        <div class="row">-->
+<!--            <div class="col">-->
+<!--                Schema columns-->
+
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--        <div class="row mt-3 mb-3" id="row0">-->
+<!--            {% for col in clumns %}-->
+<!--                <div class="row mt-2 mb-2 colRow">-->
+<!--                    <div class="col">-->
+<!--                        <input type="id" hidden class="form-control" value={{col.id}} name="id_row{{col.id}}">-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="exampleFormControlInput1">Column name</label>-->
+<!--                            <input type="text" class="form-control" name="name_row{{col.id}}" value={{col.name}}>-->
+<!--                            {% if col_form.name.errors %} col_form.name.errors {% endif %}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col">-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="exampleFormControlInput1">Type</label>-->
+<!--                            <select class="form-select mb-3"-->
+<!--                                name="type_row{{col.id}}">-->
+<!--                            <option value="full_name" {% if col.type == "full_name" %}selected="selected"{% endif %}>Full name</option>-->
+<!--                            <option value="job" {% if col.type == "job" %}selected="selected"{% endif %}>Job</option>-->
+<!--                            <option value="email" {% if col.type == "email" %}selected="selected"{% endif %}>Email</option>-->
+<!--                            <option value="company_name" {% if col.type == "company_name" %}selected="selected"{% endif %}>Company name</option>-->
+<!--                                <option value="phone_number" {% if col.type == "phone_number" %}selected="selected"{% endif %}>Phone number</option>-->
+<!--                        </select>-->
+<!--                            {% if col_form.type.errors %} col_form.name.errors {% endif %}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-auto d-flex flex-row-reverse">-->
+<!--                        <div class="row text-right">-->
+<!--                            <div class="col">-->
+<!--                                <label for="exampleFormControlInput1">Order</label>-->
+<!--                                <input type="number" class="form-control" name="order_row{{col.id}}"-->
+<!--                                       value={{col.order}}>-->
+<!--                                {% if col_form.order.errors %} col_form.name.errors {% endif %}-->
+<!--                            </div>-->
+<!--                            <div class="col-auto align-self-end">-->
+<!--                                <button class="btn btn-primary text-right" style="margin-bottom: 0;" id="delbtn">Delate-->
+<!--                                </button>-->
+<!--                            </div>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--            <div class="col">-->
+<!--                {% if col_form.errors %}-->
+<!--                        {{col_form.errors}}-->
+<!--                {% endif %}-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+
+<!--    <div class="row border pt-3 pb-3 mt-3">-->
+<!--        <div class="row" id='addROW'>-->
+<!--            <div class="col">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="exampleFormControlInput1">Column name</label>-->
+<!--                    <input type="text" class="form-control" id="exampleFormControlInput1"-->
+<!--                           placeholder="Column name" name="name_">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="exampleFormControlInput1">Type</label>-->
+
+<!--                    <select class="form-select mb-3"-->
+<!--                            id="exampleFormControlInput1" name="type_">-->
+<!--                        <option selected value="full_name">Full name</option>-->
+<!--                        <option value="job">Job</option>-->
+<!--                        <option value="email">Email</option>-->
+<!--                        <option value="company_name">Company name</option>-->
+<!--                        <option value="phone_number">Phone number</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-auto d-flex flex-row-reverse">-->
+<!--                <div class="row text-right">-->
+<!--                    <div class="col">-->
+<!--                        <label for="exampleFormControlInput1">Order</label>-->
+<!--                        <input type="number" class="form-control"-->
+<!--                               placeholder="1" name=order_>-->
+<!--                    </div>-->
+<!--                    <div class="col-auto align-self-end">-->
+<!--                        <button class="btn btn-primary text-right" style="margin-bottom: 0;" id="addBtn">Delate-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"-->
+<!--        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"-->
+<!--        crossorigin="anonymous"></script>-->
+
+<!--</body>-->
+<!--<script>-->
+<!--    window.onload = ()=>{-->
+
+<!--        function addNames(fatherNode) {-->
+<!--            inputs = fatherNode.getElementsByTagName("input")-->
+<!--            arrInputs = Array.prototype.slice.call(inputs);-->
+<!--            select = fatherNode.getElementsByTagName("select")-->
+<!--            arrSelect = Array.prototype.slice.call(select);-->
+<!--            arrInputs.map(node=>{-->
+<!--                node.name += fatherNode.id-->
+<!--            })-->
+<!--            arrSelect.map(node=>{-->
+<!--                node.name += fatherNode.id-->
+<!--            })-->
+<!--        }-->
+
+<!--        let n = 100-->
+<!--        addBtn = document.getElementById("addBtn")-->
+<!--        addRow = document.getElementById("addROW")-->
+<!--        addBtn.addEventListener('click', (event)=>{-->
+<!--            clonedRow = addRow.cloneNode(true)-->
+<!--            const id = "row" + n-->
+<!--            clonedRow.id = id-->
+<!--            addNames(clonedRow)-->
+<!--            btn = clonedRow.getElementsByTagName("button")[0]-->
+<!--            btn.onclick = (event)=>{-->
+<!--                console.log(event)-->
+<!--                document.getElementById(id).remove();-->
+<!--            }-->
+<!--            document.getElementById("row0").appendChild(clonedRow)-->
+<!--            ++n-->
+<!--        })-->
+
+<!--        const colRow = document.getElementsByClassName("colRow")-->
+<!--        for (let index = 0; index < colRow.length; index++) {-->
+<!--            const element = colRow[index];-->
+<!--            console.log(element)-->
+<!--            const btn = element.getElementsByTagName("button")[0]-->
+<!--            console.log(btn)-->
+<!--            btn.onclick = (event)=>{-->
+<!--                element.remove();-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+
+
+
+<!--</script>-->
+<!--</html>-->

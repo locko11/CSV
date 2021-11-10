@@ -1,0 +1,47 @@
+from faker import Faker
+from .models import Schema, Columns, CSV_Files
+import csv
+
+fake = Faker()
+
+PATH = 'media/'
+EXTENSION = '.csv'
+
+class Fake_CSV:
+    def __init__(self, scheme):
+        self.types = {
+            "full_name": fake.name,
+            "job": fake.job,
+            "email": fake.email,
+            'company_name': fake.company,
+            'phone_number': fake.phone_number
+        }
+        self.scheme= scheme
+        self.schame_name = scheme.schame_name
+        self.column_separator = scheme.column_separator
+        self.string_character = scheme.string_character
+        self.columns = scheme.columns.values()
+
+    def columns_for_CSV(self):
+        lst = sorted(self.columns, key=lambda x: x['order'])
+        for d in lst:
+            d['type'] = self.types[d['type']]
+        return lst
+
+    def create_CSV(self, n):
+        file_name = CSV_Files(schema=self.scheme)
+        file_path = f'{PATH}{file_name}{EXTENSION}'
+        with open(file_path, 'w', newline='') as csvfile:
+            lst = self.columns_for_CSV(self.columns)
+            fieldnames = [i['name'] for i in lst]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=':',
+                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+
+            writer.writeheader()
+            for _ in range(n):
+                writer.writerow({dct['name']: dct['type']() for dct in lst})
+
+
+
+
+

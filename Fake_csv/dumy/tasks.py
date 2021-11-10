@@ -1,6 +1,7 @@
 
 from celery import shared_task
 from time import sleep
+from .models import Schema
 
 @shared_task
 def mul(x):
@@ -27,4 +28,4 @@ def mul(x):
     return 'hello'
 
 
-
+print(Schema)
